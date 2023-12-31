@@ -4,10 +4,11 @@ import LogIn from "./login"
 import SignUp from './signup'
 import Home from './pages/Home'
 import Logout from './logout'
-import ForgotPasswordForm from './forgotpassword'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import './style.css';
+import ResetPassword from './pages/Authentification/Password Reset/ResetPassword';
+import RequestResetPassword from './pages/Authentification/Password Reset/RequestResetPassword';
 function App()
 {
   return (
@@ -17,9 +18,9 @@ function App()
         <Route path='/signup' element={<SignUp/>}></Route>
         <Route path='/home' element={<Home/>}></Route>
         <Route path='/logout' element={<Logout/>}></Route>
-        <Route path='/forgotpassword' element={<ForgotPasswordForm/>}></Route>
+        <Route path='/forgotpassword' element={<RequestResetPassword/>}></Route>
+        <Route path='/reset-password/:token' element={<ResetPassword/>}></Route>
       </Routes>
-      
     </BrowserRouter>
   )
 }
