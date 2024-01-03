@@ -9,19 +9,28 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import './style.css';
 import ResetPassword from './pages/Authentification/Password Reset/ResetPassword';
 import RequestResetPassword from './pages/Authentification/Password Reset/RequestResetPassword';
+import CreatePost from './pages/createPost';
+import Profile from './pages/Profile';
+
+
 function App()
-{
+{ 
   return (
-    <BrowserRouter>
+    
+      <BrowserRouter>
       <Routes>
         <Route path='/' element={<LogIn/>}></Route>
         <Route path='/signup' element={<SignUp/>}></Route>
-        <Route path='/home' element={<Home/>}></Route>
-        <Route path='/logout' element={<Logout/>}></Route>
         <Route path='/forgotpassword' element={<RequestResetPassword/>}></Route>
         <Route path='/reset-password/:token' element={<ResetPassword/>}></Route>
+        <Route path='/home' element={<Home/>}></Route>
+        <Route path='/logout' element={<Logout/>}></Route>
+        <Route path='/Profile' element={<Profile/>}></Route>
+        <Route path='/createPost' element={<CreatePost/>}></Route>
       </Routes>
     </BrowserRouter>
+    
+    
   )
 }
 

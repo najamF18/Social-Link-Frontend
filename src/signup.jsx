@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./style.css";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux'
+import { login, logout, setUser } from "./store/slices/auth";
+import { useNavigate } from "react-router-dom";
+
 function SignUp() {
+  const count = useSelector((state) => state.auth.value)
+  const dispatch = useDispatch()
+  const navigation=useNavigate()
   const [user, setUserData] = useState({
     fname: "",
     lname: "",
@@ -20,13 +27,12 @@ function SignUp() {
   const [error, setError] = useState(null);
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+    console.log(user);
     try {
       if (user.password !== user.confirmPassword) {
         setError("Passwords do not match");
         return;
       }
-      console.log(user);
       // Make the POST request to the Django backend
       const response = await axios.post(
         "http://localhost:8000/signup/", // Replace with your Django backend URL
@@ -37,44 +43,19 @@ function SignUp() {
           },
         }
       );
-      console.log(response);
-      if (response) {
-        // Check the response status
-        if (response.status === 200) {
-          // Assuming success, you may want to check the actual response data
-          console.log("Signup successful");
-          console.log("Response data:", response.data);
-          // Optionally, you can redirect the user or perform other actions
-        } else {
-          // Handle non-200 status code (e.g., 400 for validation errors)
-          console.error("Signup failed with status:", response.status);
-          console.error("Response data:", response.data);
-        }
-      } else {
-        // Handle undefined response
-        console.error("Undefined response received");
-      }
-
-      console.log(response.data);
-      const rr = {
-        email: user.email,
-        password: user.password,
-      };
-      const { data } = await axios.post("http://localhost:8000/token/", rr, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const data = response.data
+      dispatch(login());
+      dispatch(setUser(data.user));
+      navigation('/home');
       localStorage.clear();
       localStorage.setItem("access_token", data.access);
-      localStorage.setItem("refresh_token", data.refresh);
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${data["access"]}`;
-      window.location.href = "/home"; // Handle the response as needed
+      // window.location.href = "/home"; // Handle the response as needed
     } catch (error) {
       console.error("Error submitting the form:", error);
-      // Handle the error as needed
+      setError(error.response.data.email[0])
     }
   };
 

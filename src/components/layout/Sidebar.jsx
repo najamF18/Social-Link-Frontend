@@ -2,7 +2,8 @@ import React from 'react';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import { Person, HouseDoor, PencilSquare } from 'react-bootstrap-icons';
 import { useState, useEffect } from 'react';
-
+import MainContent from './MainContent';
+import Profile from '../../pages/Profile';
 const Sidebar = () => {
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -48,7 +49,8 @@ const Sidebar = () => {
           </Navbar>
         </Col>
         <Col xs={12} sm={9} md={10} className="p-4 content">
-          <h1>Hello Welcome</h1>
+          <MainContent></MainContent>
+          
         </Col>
       </Row>
     </Container>
